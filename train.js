@@ -76,8 +76,45 @@ connection.connect((err) => {
       //  connection.end();
      });
     }
+
+
+    const Book = () => {
+      pname = 'Ramesh Shah';
+      
+      page = 20;
+      pgender = 'M';
+      pcontactno = 1234567890;
+      ticketno = '';
+      bookingdate = '';
+      journeydate = '';
+      jclass = "3AC";
+      price = 740;
+      reservid = '';
+      seatno = '';
+      sstatus = '';
+      trainno = '';
+      trainname = '';
+
+      function generatePassengerId() {
+        // Generate a timestamp (current time in milliseconds)
+        const timestamp = new Date().getTime();
+      
+        // Generate a random number (between 1000 and 9999)
+        const random = Math.floor(Math.random() * 9000) + 1000;
+      
+        // Combine timestamp and random number to create a unique ID
+        const passengerId = `${timestamp}${random}`;
+      
+        return passengerId;
+      }      
+
+      pid = generatePassengerId();
+    }
+
+
    //Search();
-   Login();
+  //Login();
+  //Signup()
     
   });
 });
