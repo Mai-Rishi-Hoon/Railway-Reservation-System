@@ -159,10 +159,39 @@ connection.connect((err) => {
       });
     };
 
+
+    const Cancel = () => {
+      pnr = 1700243393;
+
+      const sql7 = 'Select * from Ticket where Reservationid = ?';
+      connection.query(sql7, [pnr], (err, results) => {
+        if (err) throw err;
+        console.log(results);
+      const sql8 = 'Delete from Ticket where Reservationid = ?';
+      connection.query(sql8, [pnr], (err, results) => {
+        if (err) throw err;
+        console.log("Ticket has been cancelled succesfully !!!");
+        })
+        // connection.close();
+    })
+    }
+
+    const CheckBooking = () => {
+      pid = 1;
+
+      const sql8 = 'Select * from Ticket where Passid = ?';
+      connection.query(sql8, [pid], (err, results) => {
+        if (err) throw err;
+        console.log(results);
+        connection.end();
+      })
+    }
     // Uncomment the function you want to test
     // Search();
     // Login();
     // Signup();
-    Book();
+    // Book();
+    // Cancel();
+    CheckBooking();
   });
 });
