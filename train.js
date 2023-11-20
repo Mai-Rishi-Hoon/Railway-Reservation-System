@@ -74,7 +74,7 @@ connection.connect((err) => {
         const classToCoachMap = {
           '3AC': { prefix: 'B', min: 1, max: 6 },
           '2AC': { prefix: 'A', min: 1, max: 3 },
-          '1AC': { prefix: 'HA', min: 1, max: 1 },
+          '1AC': { prefix: 'H', min: 1, max: 1 },
           'SL': { prefix: 'S', min: 1, max: 8 },
           '2C': { prefix: 'D', min: 1, max: 9 },
           'CC': { prefix: 'C', min: 1, max: 9 },
