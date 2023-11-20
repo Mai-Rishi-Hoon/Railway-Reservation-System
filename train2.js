@@ -2,6 +2,17 @@ const mysql = require('mysql');
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
+const bodyParser = require('body-parser');
+
+
+
+// Create a connection to the MySQL server
+const connection = mysql.createConnection({
+  host: 'bkp6dfgw6yjsovpnwdie-mysql.services.clever-cloud.com',
+  user: 'uglzmh6v4omyfibl',
+  password: 'pC7YAt1eDmk5WQWPgTXC',
+  port: '3306'
+});
 
 // Creating a Server
 const server = http.createServer((req, res) => {
@@ -31,13 +42,7 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
     res.end(data);
   });
 
-  // Create a connection to the MySQL server
-  const connection = mysql.createConnection({
-    host: 'bkp6dfgw6yjsovpnwdie-mysql.services.clever-cloud.com',
-    user: 'uglzmh6v4omyfibl',
-    password: 'pC7YAt1eDmk5WQWPgTXC',
-    port: '3306'
-  });
+  
 
   const Og = "Vadodara";
   const Des = "Mumbai Central";
@@ -50,13 +55,18 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
 
       const Search = () => {
         // Fetch Value from html
-        let From = document.getElementById("From").value;
-        let To = document.getElementById("To").value;
+        // let From = document.getElementById("From").value;
+        // let To = document.getElementById("To").value;
+
+        let From = req.body.From;
+        let To = req.body.To;
+
         // Select data from the table
         const sqll = 'SELECT DISTINCT T.* FROM Train T WHERE T.Trainno IN ( SELECT TS1.Trainno FROM Trainstop TS1 WHERE TS1.Stationcode = ? AND TS1.Trainno IN (SELECT TS2.Trainno FROM Trainstop TS2 WHERE TS2.Stationcode = ?))';
         connection.query(sqll,[From,To], (err, results) => {
           if (err) throw err;
           console.log(results);
+          res.json(results);
 
           // Close the connection after you've obtained the results
           connection.end();

@@ -187,11 +187,11 @@ connection.connect((err) => {
       })
     }
     // Uncomment the function you want to test
-    // Search();
+    Search();
     // Login();
     // Signup();
     // Book();
     // Cancel();
-    CheckBooking();
+    // CheckBooking();
   });
 });
