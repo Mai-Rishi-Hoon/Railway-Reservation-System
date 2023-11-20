@@ -39,20 +39,22 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
     port: '3306'
   });
 
-  const Og = $From;
+  const Og = "Vadodara";
   const Des = "Mumbai Central";
 
-  connection.connect((err) => {
-    if (err) throw err;
+  
 
     // Create the database
     connection.query('USE bkp6dfgw6yjsovpnwdie', (err) => {
       if (err) throw err;
 
       const Search = () => {
+        // Fetch Value from html
+        let From = document.getElementById("From").value;
+        let To = document.getElementById("To").value;
         // Select data from the table
-        const sqll = 'SELECT DISTINCT T.* FROM Train T WHERE T.Trainno IN ( SELECT TS1.Trainno FROM Trainstop TS1 WHERE TS1.Stationcode = 126 AND TS1.Trainno IN (SELECT TS2.Trainno FROM Trainstop TS2 WHERE TS2.Stationcode = 104))';
-        connection.query(sqll, (err, results) => {
+        const sqll = 'SELECT DISTINCT T.* FROM Train T WHERE T.Trainno IN ( SELECT TS1.Trainno FROM Trainstop TS1 WHERE TS1.Stationcode = ? AND TS1.Trainno IN (SELECT TS2.Trainno FROM Trainstop TS2 WHERE TS2.Stationcode = ?))';
+        connection.query(sqll,[From,To], (err, results) => {
           if (err) throw err;
           console.log(results);
 
@@ -61,7 +63,7 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
         });
       }
 
-      if (req.url === '/search' && req.method === 'POST') {
+      if (req.url === '/Search' && req.method === 'POST') {
         Search();
       }
 
@@ -70,7 +72,7 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
       }
     });
   });
-});
+
 
 const port = 3000;
 server.listen(port, () => console.log(`Listening on http://127.0.0.1:${port}`));
