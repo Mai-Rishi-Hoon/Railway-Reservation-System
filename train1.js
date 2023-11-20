@@ -1,5 +1,21 @@
 const mysql = require('mysql');
+const fs = require('fs');
+const http = require('http');
+// Creating a Server 
 
+const server = http.createServer((req, res) => {
+
+// Reading the html file 
+fs.readFile('homepage.html','utf-8',(err,data) => {
+  if (err){
+    res.writeHead(500,{'Content-type':'text/plain'});
+    res.end('Internal Server Error !!!');
+    return;
+  }
+  else{
+    res.end(data);
+  }
+});
 // Create a connection to the MySQL server
 const connection = mysql.createConnection({
   host: 'bkp6dfgw6yjsovpnwdie-mysql.services.clever-cloud.com',
@@ -41,3 +57,7 @@ connection.connect((err) => {
     
   });
 });
+
+});
+const port = 3000;
+server.listen(port, ()=>console.log(`Listening on http://127.0.0.1:${port}`));
