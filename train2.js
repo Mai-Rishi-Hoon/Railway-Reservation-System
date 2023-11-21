@@ -3,8 +3,12 @@ const fs = require('fs');
 const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
+const express = require('express');
 
+const app = express();
+// const port = 3000;
 
+app.use(bodyParser.json());
 
 // Create a connection to the MySQL server
 const connection = mysql.createConnection({
@@ -57,7 +61,10 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
         // Fetch Value from html
         // let From = document.getElementById("From").value;
         // let To = document.getElementById("To").value;
-
+        if (!req.body || !req.body.From || !req.body.To) {
+          res.status(400).json({ error: 'Bad Request' });
+          return;
+      } 
         let From = req.body.From;
         let To = req.body.To;
 
@@ -72,6 +79,8 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
           connection.end();
         });
       }
+      // app.post('/Search', Search);
+      app.post('/Search', (req, res) => Search(req, res));
 
       if (req.url === '/Search' && req.method === 'POST') {
         Search();
@@ -83,6 +92,7 @@ const filePath = path.join(__dirname, 'Rail', req.url === '/' ? 'homepage.html' 
     });
   });
 
+  
 
 const port = 3000;
 server.listen(port, () => console.log(`Listening on http://127.0.0.1:${port}`));
